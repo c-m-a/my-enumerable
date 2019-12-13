@@ -16,7 +16,7 @@ module Enumerable
   end
 
   def my_each_with_index
-    return p to_enum(__method__) unless block_given?
+    return to_enum(__method__) unless block_given?
 
     i = 0
     array = self.class == Array ? self : to_a
@@ -30,7 +30,7 @@ module Enumerable
   end
 
   def my_select
-    return p to_enum(__method__) unless block_given?
+    return to_enum(__method__) unless block_given?
 
     i = 0
     array = self.class == Array ? self : to_a
@@ -45,6 +45,23 @@ module Enumerable
     end
 
     array_rs
+  end
+
+  def my_all?
+    return true unless block_given?
+
+    i = 0
+    array = self.class == Array ? self : to_a
+
+    while i < size
+      result = yield(array[i])
+      boolean_and_true = (boolean? result) && (result == true)
+
+      break unless boolean_and_true == true
+      i += 1
+    end
+
+    boolean_and_true
   end
 
   def boolean?(value)
