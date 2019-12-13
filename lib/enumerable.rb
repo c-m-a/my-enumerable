@@ -58,6 +58,7 @@ module Enumerable
       boolean_and_true = (boolean? result) && (result == true)
 
       break unless boolean_and_true == true
+
       i += 1
     end
 
