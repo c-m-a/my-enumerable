@@ -47,15 +47,20 @@ module Enumerable
     array_rs
   end
 
-  def my_all?
+  def my_all?(pattern = nil)
     return true unless block_given?
 
     i = 0
+    is_a_class = pattern.is_a? Class
     array = self.class == Array ? self : to_a
 
     while i < size
-      result = yield(array[i])
-      boolean_and_true = (boolean? result) && (result == true)
+      boolean_and_true =
+        if is_a_class
+          array[i].is_a? pattern
+        else
+          truthy? yield(array[i])
+        end
 
       break unless boolean_and_true == true
 
@@ -65,7 +70,7 @@ module Enumerable
     boolean_and_true
   end
 
-  def boolean?(value)
-    [true, false].include? value
+  def truthy?(value)
+    ([true, false].include? value) && value
   end
 end
