@@ -32,19 +32,11 @@ module Enumerable
   def my_select
     return to_enum(__method__) unless block_given?
 
-    i = 0
-    array = self.class == Array ? self : to_a
-    array_rs = []
+    arr = []
 
-    while i < size
-      result = yield(array[i])
-      boolean_and_true = (boolean? result) && (result == true)
+    my_each { |e| arr << e if yield(e) }
 
-      array_rs << array[i] if boolean_and_true
-      i += 1
-    end
-
-    array_rs
+    arr
   end
 
   def my_all?(pattern = nil)
