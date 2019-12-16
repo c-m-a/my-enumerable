@@ -39,27 +39,26 @@ module Enumerable
     arr
   end
 
-  def my_all?(pattern = nil)
+  def my_all?(pattern = nil, &block)
     return true if pattern.nil? ^ block_given?
 
-    i = 0
-    is_a_class = pattern.is_a? Class
-    array = self.class == Array ? self : to_a
+    my_each { |e| return false unless block.call(e) } if block_given?
 
-    while i < size
-      all =
-        if is_a_class
-          array[i].is_a? pattern
-        else
-          truthy? yield(array[i])
-        end
-
-      break unless all == true
-
-      i += 1
+    case pattern
+    when Class
+      my_each { |e| return false unless e.class == pattern }
+    when TrueClass
+      my_each { |e| return false unless e.class == pattern.class }
+    when Range
+      my_each { |e| return false unless pattern.include? e }
+    when Regexp
+      my_each do |e|
+        return false if e.class != String
+        return false if pattern.match(e).nil?
+      end
     end
 
-    all
+    true
   end
 
   def my_any?(pattern = nil)
