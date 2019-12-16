@@ -61,27 +61,26 @@ module Enumerable
     true
   end
 
-  def my_any?(pattern = nil)
+  def my_any?(pattern = nil, &block)
     return true if pattern.nil? ^ block_given?
 
-    i = 0
-    is_a_class = pattern.is_a? Class
-    array = self.class == Array ? self : to_a
+    my_each { |e| return true if block.call(e) } if block_given?
 
-    while i < size
-      any =
-        if is_a_class
-          array[i].is_a? pattern
-        else
-          truthy? yield(array[i])
-        end
-
-      break if any == true
-
-      i += 1
+    case pattern
+    when Class
+      my_each { |e| return true if e.class == pattern }
+    when TrueClass
+      my_each { |e| return true if e.class == pattern.class }
+    when Range
+      my_each { |e| return true if pattern.include? e }
+    when Regexp
+      my_each do |e|
+        return false if e.class != String
+        return true unless pattern.match(e).nil?
+      end
     end
 
-    any
+    false
   end
 
   def truthy?(value)
