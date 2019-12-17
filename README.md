@@ -25,7 +25,7 @@ include 'lib/enumerable'
 
 You can check the [ruby ver. 2.6.5 documentation from Enumerable](https://ruby-doc.org/core-2.6.5/Enumerable.html).
 
-#### my_all? [{ |obj| block } ] → true or false click to toggle source
+#### 1. my_all? [{ |obj| block } ] → true or false click to toggle source
 **my_all?(pattern) → true or false**
 
 Passes each element of the collection to the given block. The method returns true
@@ -44,7 +44,7 @@ If instead a pattern is supplied, the method returns whether `pattern === elemen
 [].my_all?                                           #=> true
 ```
 
-#### my_any?(pattern) → true or false
+#### 2. my_any?(pattern) → true or false
 
 Passes each element of the collection to the given block. The method returns true
  if the block ever returns a value other than `false` or `nil.` If the block is not
@@ -62,8 +62,8 @@ If instead a pattern is supplied, the method returns whether `pattern === elemen
 [].my_any?                                           #=> false
 ```
 
-#### my_each_with_index(*args) { |obj, i| block } → enum
-**my_each_with_index(*args) → an_enumerator**
+#### 3. my_each_with_index(*args) { |obj, i| block } → enum
+__my_each_with_index(*args) → an_enumerator__
 
 Calls block with two arguments, the item and its index, for each item in enum.
  Given arguments are passed through to `my_each()`.
@@ -78,7 +78,7 @@ hash = Hash.new
 hash   #=> {"cat"=>0, "dog"=>1, "wombat"=>2}
 ```
 
-#### my_select { |obj| block } → array
+#### 4. my_select { |obj| block } → array
 **my_select → an_enumerator**
 
 Returns an array containing all elements of enum for which the given block returns
@@ -90,7 +90,7 @@ If no block is given, an Enumerator is returned instead.
 [1,2,3,4,5].my_select { |num|  num.even?  }   #=> [2, 4]
 ```
 
-#### my_count → int
+#### 5. my_count → int
 **my_count(item) → int**
 **my_count { |obj| block } → int**
 
@@ -105,7 +105,7 @@ ary.my_count(2)            #=> 2
 ary.my_count{ |x| x%2==0 } #=> 3
 ```
 
-#### my_map { |obj| block } → array click to toggle source
+#### 6. my_map { |obj| block } → array click to toggle source
 **my_map → an_enumerator**
 
 Returns a new array with the results of running block once for every element in
@@ -117,7 +117,7 @@ If no block is given, an enumerator is returned instead.
 (1..4).my_map { |i| i*i }      #=> [1, 4, 9, 16]
 ```
 
-#### my_inject(initial, sym) → obj
+#### 7. my_inject(initial, sym) → obj
 #### my_inject(sym) → obj
 #### my_inject(initial) { |memo, obj| block } → obj
 #### my_inject { |memo, obj| block } → obj
