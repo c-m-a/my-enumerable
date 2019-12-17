@@ -94,4 +94,14 @@ module Enumerable
     my_each { count += 1 } unless item && block_given?
     count
   end
+
+  def my_map
+    return p to_enum(__method__) unless block_given?
+
+    array = []
+
+    my_each { |e| array << yield(e) }
+
+    array
+  end
 end
