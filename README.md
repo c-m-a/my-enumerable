@@ -118,9 +118,9 @@ If no block is given, an enumerator is returned instead.
 ```
 
 #### 7. my_inject(initial, sym) → obj
-#### my_inject(sym) → obj
-#### my_inject(initial) { |memo, obj| block } → obj
-#### my_inject { |memo, obj| block } → obj
+*my_inject(sym) → obj*
+*my_inject(initial) { |memo, obj| block } → obj*
+*my_inject { |memo, obj| block } → obj*
 
 Combines all elements of enum by applying a binary operation, specified by a
  block or a symbol that names a method or operator.
