@@ -45,11 +45,7 @@ module Enumerable
 
     case pattern
     when Class
-      if pattern == Numeric
-        my_each { |e| return false unless [Complex, Integer, Float].include? e.class }
-      else
-        my_each { |e| puts e.class; return false unless e.class == pattern }
-      end
+      my_each { |e| return false unless e.class == pattern || e.class < pattern }
     when TrueClass, FalseClass
       my_each { |e| return false unless e.class == pattern.class }
     when Range
