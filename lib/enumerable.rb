@@ -83,7 +83,36 @@ module Enumerable
     false
   end
 
-  def truthy?(value)
-    ([true, false].include? value) && value
+  def my_count(pattern = nil, &block)
+    counter = 0
+
+    case pattern
+    when Class
+      unless boolean? pattern
+        my_each { |e| counter += 1 if e.class == pattern }
+      end
+    when TrueClass, FalseClass
+      my_each { |e| counter += 1 if e.class == pattern.class }
+    when Range
+      my_each { |e| counter += 1 if pattern.include? e }
+    when Regexp
+      my_each do |e|
+        if e.class == String
+          return counter += 1 unless pattern.match(e).nil?
+        end
+      end
+    else
+      if block_given?
+        my_each { |e| counter += 1 if block.call(e) }
+      else
+        my_each { counter += 1 }
+      end
+    end
+
+    counter
+  end
+
+  def boolean?(value)
+    [TrueClass, TrueClass].include? value
   end
 end
