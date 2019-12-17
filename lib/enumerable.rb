@@ -61,13 +61,11 @@ module Enumerable
   end
 
   def my_any?(pattern = nil, &block)
-    return true if pattern.nil? ^ block_given?
-
     my_each { |e| return true if block.call(e) } if block_given?
 
     case pattern
     when Class
-      my_each { |e| return true if e.class == pattern } unless [TrueClass, FalseClass].include? pattern.class
+      my_each { |e| return true if e.class == pattern || e.class < pattern }
     when TrueClass, FalseClass
       my_each { |e| return true if e.class == pattern.class }
     when Range
@@ -77,6 +75,8 @@ module Enumerable
         return false if e.class != String
         return true unless pattern.match(e).nil?
       end
+    else
+      my_each { |e| return true if e.nil? }
     end
 
     false
