@@ -88,25 +88,15 @@ module Enumerable
 
     case pattern
     when Class
-      unless boolean? pattern
-        my_each { |e| counter += 1 if e.class == pattern }
-      end
+      my_each { |e| counter += 1 if e.class == pattern } unless boolean? pattern
     when TrueClass, FalseClass
       my_each { |e| counter += 1 if e.class == pattern.class }
     when Range
       my_each { |e| counter += 1 if pattern.include? e }
     when Regexp
-      my_each do |e|
-        if e.class == String
-          return counter += 1 unless pattern.match(e).nil?
-        end
-      end
+      count_regexp(pattern, counter)
     else
-      if block_given?
-        my_each { |e| counter += 1 if block.call(e) }
-      else
-        my_each { counter += 1 }
-      end
+      count_default(block, counter)
     end
 
     counter
@@ -114,5 +104,21 @@ module Enumerable
 
   def boolean?(value)
     [TrueClass, TrueClass].include? value
+  end
+
+  def count_regexp(pattern, counter)
+    my_each do |e|
+      if e.class == String
+        return counter += 1 unless pattern.match(e).nil?
+      end
+    end
+  end
+
+  def count_default(block, counter)
+    if block_given?
+      my_each { |e| counter += 1 if block.call(e) }
+    else
+      my_each { counter += 1 }
+    end
   end
 end
