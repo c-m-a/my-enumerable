@@ -104,4 +104,14 @@ module Enumerable
 
     array
   end
+
+  def my_inject(initial = nil, sym = nil, &block)
+    acc = initial || first
+    acc = initial.class == Symbol ? first : initial
+    acc -= acc if acc != initial && acc.class != String
+    my_each { |e| acc = block.call(acc, e) } if block_given?
+    my_each { |e| acc = acc.send(sym, e) } if initial && sym
+    my_each { |e| acc = acc.send(initial, e) } if initial.class == Symbol
+    acc
+  end
 end
