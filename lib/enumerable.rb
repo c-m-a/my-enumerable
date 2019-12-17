@@ -83,7 +83,15 @@ module Enumerable
     false
   end
 
-  def truthy?(value)
-    ([true, false].include? value) && value
+  def my_count(item = nil, &block)
+    count = 0
+    my_each { |e| count += 1 if e == item } if item
+    return count if item
+
+    my_each { |e| count += 1 if block.call(e) } if block_given?
+    return count if block_given?
+
+    my_each { count += 1 } unless item && block_given?
+    count
   end
 end
