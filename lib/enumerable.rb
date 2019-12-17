@@ -40,14 +40,17 @@ module Enumerable
   end
 
   def my_all?(pattern = nil, &block)
-    return true if pattern.nil? ^ block_given?
-
     my_each { |e| return false unless block.call(e) } if block_given?
+    my_each { |e| return false unless e } unless pattern && block_given?
 
     case pattern
     when Class
-      my_each { |e| return false unless e.class == pattern }
-    when TrueClass
+      if pattern == Numeric
+        my_each { |e| return false unless [Complex, Integer, Float].include? e.class }
+      else
+        my_each { |e| puts e.class; return false unless e.class == pattern }
+      end
+    when TrueClass, FalseClass
       my_each { |e| return false unless e.class == pattern.class }
     when Range
       my_each { |e| return false unless pattern.include? e }
@@ -68,8 +71,8 @@ module Enumerable
 
     case pattern
     when Class
-      my_each { |e| return true if e.class == pattern }
-    when TrueClass
+      my_each { |e| return true if e.class == pattern } unless [TrueClass, FalseClass].include? pattern.class
+    when TrueClass, FalseClass
       my_each { |e| return true if e.class == pattern.class }
     when Range
       my_each { |e| return true if pattern.include? e }
