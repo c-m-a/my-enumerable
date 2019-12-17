@@ -83,42 +83,15 @@ module Enumerable
     false
   end
 
-  def my_count(pattern = nil, &block)
-    counter = 0
+  def my_count(item = nil, &block)
+    count = 0
+    my_each { |e| count += 1 if e == item } if item
+    return count if item
 
-    case pattern
-    when Class
-      my_each { |e| counter += 1 if e.class == pattern } unless boolean? pattern
-    when TrueClass, FalseClass
-      my_each { |e| counter += 1 if e.class == pattern.class }
-    when Range
-      my_each { |e| counter += 1 if pattern.include? e }
-    when Regexp
-      count_regexp(pattern, counter)
-    else
-      count_default(block, counter)
-    end
+    my_each { |e| count += 1 if block.call(e) } if block_given?
+    return count if block_given?
 
-    counter
-  end
-
-  def boolean?(value)
-    [TrueClass, TrueClass].include? value
-  end
-
-  def count_regexp(pattern, counter)
-    my_each do |e|
-      if e.class == String
-        return counter += 1 unless pattern.match(e).nil?
-      end
-    end
-  end
-
-  def count_default(block, counter)
-    if block_given?
-      my_each { |e| counter += 1 if block.call(e) }
-    else
-      my_each { counter += 1 }
-    end
+    my_each { count += 1 } unless item && block_given?
+    count
   end
 end
