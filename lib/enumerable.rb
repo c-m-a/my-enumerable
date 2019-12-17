@@ -115,3 +115,9 @@ module Enumerable
     acc
   end
 end
+
+def multiply_els(array)
+  array.my_inject(1) { |acc, n| acc * n }
+end
+
+puts multiply_els([5, 8, 9])
