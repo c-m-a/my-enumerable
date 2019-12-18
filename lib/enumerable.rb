@@ -78,7 +78,7 @@ module Enumerable
         return true unless pattern.match(e).nil?
       end
     else
-      my_each { |e| return true if e.nil? }
+      my_each { |e| return true if e } if pattern.nil?
     end
 
     false
