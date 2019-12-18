@@ -41,7 +41,8 @@ module Enumerable
 
   def my_all?(pattern = nil, &block)
     my_each { |e| return false unless block.call(e) } if block_given?
-    my_each { |e| return false unless e } unless pattern && block_given?
+    my_each { |e| return false unless e == pattern } if [Integer, String].include?(pattern.class)
+    my_each { |e| return false unless e } if !pattern && !block_given?
 
     case pattern
     when Class
@@ -51,12 +52,7 @@ module Enumerable
     when Range
       my_each { |e| return false unless pattern.include? e }
     when Regexp
-      my_each do |e|
-        return false if e.class != String
-        return false if pattern.match(e).nil?
-      end
-    else
-      my_each { |e| return false if e } unless pattern.nil?
+      my_each { |e| return false unless e =~ pattern }
     end
 
     true
@@ -64,6 +60,8 @@ module Enumerable
 
   def my_any?(pattern = nil, &block)
     my_each { |e| return true if block.call(e) } if block_given?
+    my_each { |e| return true if e == pattern } if [Integer, String].include?(pattern.class)
+    my_each { |e| return true if e } if !pattern && !block_given?
 
     case pattern
     when Class
@@ -73,12 +71,7 @@ module Enumerable
     when Range
       my_each { |e| return true if pattern.include? e }
     when Regexp
-      my_each do |e|
-        return false if e.class != String
-        return true unless pattern.match(e).nil?
-      end
-    else
-      my_each { |e| return true if e } if pattern.nil?
+      my_each { |e| return true if e =~ pattern }
     end
 
     false
@@ -86,10 +79,20 @@ module Enumerable
 
   def my_none?(pattern = nil, &block)
     my_each { |e| return false if block.call(e) } if block_given?
-    my_each { |e| return false if e.class == pattern || e.class < pattern } if pattern.class == Class
-    my_each { |e| return false if e =~ pattern } if pattern.class == Regexp
     my_each { |e| return false if e == pattern } if [Integer, String].include?(pattern.class)
     my_each { |e| return false if e } if !pattern && !block_given?
+
+    case pattern
+    when Class
+      my_each { |e| return false if e.class == pattern || e.class < pattern }
+    when TrueClass, FalseClass
+      my_each { |e| return false if e.class == pattern.class }
+    when Range
+      my_each { |e| return false if pattern.include? e }
+    when Regexp
+      my_each { |e| return false if e =~ pattern }
+    end
+
     true
   end
 
