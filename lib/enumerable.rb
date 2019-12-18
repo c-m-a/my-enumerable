@@ -84,7 +84,7 @@ module Enumerable
     false
   end
 
-  def my_none?
+  def my_none?(pattern = nil, &block)
     my_each { |e| return false if block.call(e) } if block_given?
     my_each { |e| return false if e.class == pattern || e.class < pattern } if pattern.class == Class
     my_each { |e| return false if e =~ pattern } if pattern.class == Regexp
