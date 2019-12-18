@@ -55,6 +55,8 @@ module Enumerable
         return false if e.class != String
         return false if pattern.match(e).nil?
       end
+    else
+      my_each { |e| return false if e } unless pattern.nil?
     end
 
     true
