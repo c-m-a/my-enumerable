@@ -84,6 +84,15 @@ module Enumerable
     false
   end
 
+  def none?
+    my_each { |e| return false if block.call(e) } if block_given?
+    my_each { |e| return false if e.class == pattern || e.class < pattern } if pattern.class == Class
+    my_each { |e| return false if e =~ pattern } if pattern.class == Regexp
+    my_each { |e| return false if e == pattern } if [Integer, String].include?(pattern.class)
+    my_each { |e| return false if e } if !pattern && !block_given?
+    true
+  end
+
   def my_count(item = nil, &block)
     count = 0
     my_each { |e| count += 1 if e == item } if item
