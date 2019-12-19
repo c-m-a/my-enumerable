@@ -81,7 +81,7 @@ hash   #=> {"cat"=>0, "dog"=>1, "wombat"=>2}
 #### 4. my_select { |obj| block } → array
 **my_select → an_enumerator**
 
-Returns an array containing all elements of enum for which the given block returns
+Returns an array containing all elements of `enum` for which the given block returns
  a true value.
 
 If no block is given, an Enumerator is returned instead.
@@ -96,7 +96,7 @@ If no block is given, an Enumerator is returned instead.
 
 Returns the number of items in enum through enumeration. If an argument is given,
  the number of items in enum that are equal to item are counted. If a block is
- given, it counts the number of elements yielding a true value.
+ given, it counts the number of elements yielding a `true` value.
 
 ```ruby
 ary = [1, 2, 4, 2]
