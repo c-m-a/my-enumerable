@@ -20,9 +20,9 @@ Metrics/ClassLength:
 Metrics/BlockLength:
   ExcludedMethods: ['describe']
 Metrics/PerceivedComplexity:
-  Max: 19
+  Enabled: false
 Metrics/CyclomaticComplexity:
-  Max: 19
+  Enabled: false
 
 Style/Documentation:
   Enabled: false
