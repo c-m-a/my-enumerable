@@ -120,3 +120,20 @@ RSpec.describe Enumerable, '#my_count' do
     end
   end
 end
+
+RSpec.describe Enumerable, '#my_map' do
+  context 'no block given' do
+    let(:arr) { [1, 2] }
+    it 'returns Enumerator' do
+      native = arr.map.class
+      expect(arr.my_map.class).to eq native
+    end
+  end
+  context 'block given' do
+    let(:arr) { [1, 2] }
+    it 'returns Enumerator' do
+      native = arr.map { |n| arr.include?(n) }
+      expect(arr.my_map { |n| arr.include?(n) }).to eq native
+    end
+  end
+end
