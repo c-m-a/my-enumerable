@@ -137,3 +137,20 @@ RSpec.describe Enumerable, '#my_map' do
     end
   end
 end
+
+RSpec.describe Enumerable, '#my_inject' do
+  context 'no block given' do
+    let(:arr) { [1, 2] }
+    it 'returns Object' do
+      native = arr.inject(:+)
+      expect(arr.my_inject(:+)).to eq native
+    end
+  end
+  context 'block given' do
+    let(:arr) { [1, 2] }
+    it 'returns Object' do
+      native = arr.inject { |_a, n| arr.include?(n) }
+      expect(arr.my_inject { |_a, n| arr.include?(n) }).to eq native
+    end
+  end
+end
