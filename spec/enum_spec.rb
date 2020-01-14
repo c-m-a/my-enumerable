@@ -103,3 +103,20 @@ RSpec.describe Enumerable, '#my_none?' do
     end
   end
 end
+
+RSpec.describe Enumerable, '#my_count' do
+  context 'no block given' do
+    let(:arr) { [1, 2] }
+    it 'returns Integer' do
+      native = arr.count.class
+      expect(arr.my_count.class).to eq native
+    end
+  end
+  context 'block given' do
+    let(:arr) { [1, 2] }
+    it 'returns Integer' do
+      native = arr.count { |n| arr.include?(n) }
+      expect(arr.my_count { |n| arr.include?(n) }).to eq native
+    end
+  end
+end
