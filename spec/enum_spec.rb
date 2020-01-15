@@ -134,8 +134,8 @@ RSpec.describe Enumerable do
     context 'no block given' do
       let(:arr) { [1, 2] }
       it 'returns Boolean' do
-        native = arr.none?.class
-        expect(arr.my_none?.class).to eq native
+        native = arr.none?
+        expect(arr.my_none?).to eq native
       end
     end
     context 'block given' do
