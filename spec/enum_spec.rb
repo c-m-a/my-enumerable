@@ -58,8 +58,8 @@ RSpec.describe Enumerable do
     context 'no block given' do
       let(:arr) { [1, 2] }
       it 'returns Boolean' do
-        native = arr.all?.class
-        expect(arr.my_all?.class).to eq native
+        native = arr.all?
+        expect(arr.my_all?).to eq native
       end
     end
     context 'block given' do
@@ -70,10 +70,17 @@ RSpec.describe Enumerable do
       end
     end
     context 'regex given' do
-      let(:arr) { %w[ant bear cat] }
+      let(:arr) { %w[nil, true, 99] }
       it 'returns Boolean' do
         native = arr.all?(/d/)
         expect(arr.my_all?(/d/)).to eq native
+      end
+    end
+    context 'class given' do
+      let(:arr) { %w[nil, true, 99] }
+      it 'returns Boolean' do
+        native = arr.all?(Integer)
+        expect(arr.my_all?(Integer)).to eq native
       end
     end
   end
