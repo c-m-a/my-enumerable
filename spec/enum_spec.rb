@@ -133,8 +133,8 @@ RSpec.describe Enumerable do
     context 'block given' do
       let(:arr) { [1, 2] }
       it 'returns Enumerator' do
-        native = arr.map { |n| arr.include?(n) }
-        expect(arr.my_map { |n| arr.include?(n) }).to eq native
+        native = arr.map { |n| n * n }
+        expect(arr.my_map { |n| n * n }).to eq native
       end
     end
   end
