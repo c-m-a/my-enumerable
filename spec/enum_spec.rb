@@ -77,14 +77,14 @@ RSpec.describe Enumerable do
       end
     end
     context 'regex given' do
-      let(:arr) { %w[nil, true, 99] }
+      let(:arr) { [nil, true, 99] }
       it 'returns Boolean' do
         native = arr.all?(/d/)
         expect(arr.my_all?(/d/)).to eq native
       end
     end
     context 'class given' do
-      let(:arr) { %w[nil, true, 99] }
+      let(:arr) { [nil, true, 99] }
       it 'returns Boolean' do
         native = arr.all?(Integer)
         expect(arr.my_all?(Integer)).to eq native
@@ -115,14 +115,14 @@ RSpec.describe Enumerable do
       end
     end
     context 'regex given' do
-      let(:arr) { %w[nil, true, 99] }
+      let(:arr) { [nil, true, 99] }
       it 'returns Boolean' do
         native = arr.any?(/d/)
         expect(arr.my_any?(/d/)).to eq native
       end
     end
     context 'class given' do
-      let(:arr) { %w[nil, true, 99] }
+      let(:arr) { [nil, true, 99] }
       it 'returns Boolean' do
         native = arr.any?(Integer)
         expect(arr.my_any?(Integer)).to eq native
@@ -131,6 +131,13 @@ RSpec.describe Enumerable do
   end
 
   describe '#my_none?' do
+    context 'empty array given' do
+      let(:arr) { [] }
+      it 'returns Boolean' do
+        native = arr.any?
+        expect(arr.my_any?).to eq native
+      end
+    end
     context 'no block given' do
       let(:arr) { [1, 2] }
       it 'returns Boolean' do
@@ -143,6 +150,20 @@ RSpec.describe Enumerable do
       it 'returns Boolean' do
         native = arr.none? { |n| arr.include?(n) }
         expect(arr.my_none? { |n| arr.include?(n) }).to eq native
+      end
+    end
+    context 'regex given' do
+      let(:arr) { [nil, true, 99] }
+      it 'returns Boolean' do
+        native = arr.none?(/d/)
+        expect(arr.my_none?(/d/)).to eq native
+      end
+    end
+    context 'class given' do
+      let(:arr) { [1, 3.14, 42] }
+      it 'returns Boolean' do
+        native = arr.none?(Integer)
+        expect(arr.my_none?(Integer)).to eq native
       end
     end
   end
