@@ -69,6 +69,13 @@ RSpec.describe Enumerable do
         expect(arr.my_all? { |n| arr.include?(n) }).to eq native
       end
     end
+    context 'regex given' do
+      let(:arr) { %w(ant bear cat) }
+      it 'returns Boolean' do
+        native = arr.any?(/d/)
+        expect(arr.my_any?(/d/)).to eq native
+      end
+    end
   end
 
   describe '#my_any?' do
