@@ -64,7 +64,7 @@ RSpec.describe Enumerable do
     end
     context 'block given' do
       let(:arr) { [1, 2] }
-      it 'returns Enumerator' do
+      it 'returns Boolean' do
         native = arr.all? { |n| arr.include?(n) }
         expect(arr.my_all? { |n| arr.include?(n) }).to eq native
       end
@@ -81,7 +81,7 @@ RSpec.describe Enumerable do
     end
     context 'block given' do
       let(:arr) { [1, 2] }
-      it 'returns Enumerator' do
+      it 'returns Boolean' do
         native = arr.any? { |n| arr.include?(n) }
         expect(arr.my_any? { |n| arr.include?(n) }).to eq native
       end
@@ -98,7 +98,7 @@ RSpec.describe Enumerable do
     end
     context 'block given' do
       let(:arr) { [1, 2] }
-      it 'returns Enumerator' do
+      it 'returns Boolean' do
         native = arr.none? { |n| arr.include?(n) }
         expect(arr.my_none? { |n| arr.include?(n) }).to eq native
       end
