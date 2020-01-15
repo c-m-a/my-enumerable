@@ -70,7 +70,7 @@ RSpec.describe Enumerable do
       end
     end
     context 'regex given' do
-      let(:arr) { %w(ant bear cat) }
+      let(:arr) { %w[ant bear cat] }
       it 'returns Boolean' do
         native = arr.any?(/d/)
         expect(arr.my_any?(/d/)).to eq native
