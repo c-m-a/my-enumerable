@@ -55,6 +55,13 @@ RSpec.describe Enumerable do
   end
 
   describe '#my_all?' do
+    context 'empty array given' do
+      let(:arr) { [] }
+      it 'returns Boolean' do
+        native = arr.all?
+        expect(arr.my_all?).to eq native
+      end
+    end
     context 'no block given' do
       let(:arr) { [1, 2] }
       it 'returns Boolean' do
@@ -86,11 +93,18 @@ RSpec.describe Enumerable do
   end
 
   describe '#my_any?' do
+    context 'empty array given' do
+      let(:arr) { [] }
+      it 'returns Boolean' do
+        native = arr.any?
+        expect(arr.my_any?).to eq native
+      end
+    end
     context 'no block given' do
       let(:arr) { [1, 2] }
       it 'returns Boolean' do
-        native = arr.any?.class
-        expect(arr.my_any?.class).to eq native
+        native = arr.any?
+        expect(arr.my_any?).to eq native
       end
     end
     context 'block given' do
@@ -98,6 +112,20 @@ RSpec.describe Enumerable do
       it 'returns Boolean' do
         native = arr.any? { |n| arr.include?(n) }
         expect(arr.my_any? { |n| arr.include?(n) }).to eq native
+      end
+    end
+    context 'regex given' do
+      let(:arr) { %w[nil, true, 99] }
+      it 'returns Boolean' do
+        native = arr.any?(/d/)
+        expect(arr.my_any?(/d/)).to eq native
+      end
+    end
+    context 'class given' do
+      let(:arr) { %w[nil, true, 99] }
+      it 'returns Boolean' do
+        native = arr.any?(Integer)
+        expect(arr.my_any?(Integer)).to eq native
       end
     end
   end
